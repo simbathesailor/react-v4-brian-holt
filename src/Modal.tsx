@@ -2,23 +2,28 @@
 import React from "react";
 import { createPortal } from "react-dom";
 
+const modalRoot = document.getElementById("modal");
 
 class Modal extends React.Component {
+  private el = document.getElementById("modal");
   constructor(props) {
     super(props);
   }
   
-  componentDidMount() {
+  public componentDidMount() {
     this.el = document.createElement("div");
-    this.modalRoot = document.getElementById("modal");
-    this.modalRoot.appendChild(this.el);
+    if (modalRoot) {
+      modalRoot.appendChild(this.el);
+    }
   }
 
-  componentWillUnmount() {
-    this.modalRoot.removeChild(this.el);
+  public componentWillUnmount() {
+   if(modalRoot) {
+    modalRoot.removeChild(this.el);
+   }
   }
 
-  render() {
+  public render() {
     return createPortal(this.props.children, this.el);
   }
 }
